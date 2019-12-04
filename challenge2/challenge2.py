@@ -20,13 +20,18 @@ class Challenge2(unittest.TestCase):
     def test_challenge2(self):
         # code for our test steps
         self.driver.get("https://www.copart.com/")
-        time.sleep(5)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input-search")))
         self.driver.find_element(By.ID, "input-search").send_keys("exotic")
         self.driver.find_element(By.ID, "input-search").send_keys(Keys.ENTER)
-        time.sleep(5)
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(5) > span")))
-        assert self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(5) > span").text == "PORSCHE"
+        child = 2
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".even:nth-child("+str(child)+") > td:nth-child(5) > span")))
+        while True:
+            try:
+                assert self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child("+str(child)+") > td:nth-child(5) > span").text == "PORSCHE"
+                break
+            except AssertionError as e:
+                print(e.args)
+                child += 2
 
     if __name__ == '__main__':
         unittest.main()
