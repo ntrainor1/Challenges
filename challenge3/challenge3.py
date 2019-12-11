@@ -20,18 +20,18 @@ class Challenge3(unittest.TestCase):
     def test_challenge3(self):
         # code for our test steps
         self.driver.get("https://www.copart.com/")
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id=\"tabTrending\"]/div[1]/div[2]/div[1]/ul/li[1]")))
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@ng-if=\"popularSearches\"]")))
         # table = self.driver.find_elements_by_xpath("//*[@id=\"tabTrending\"]/div[1]/div[2]")
         # for item in table:
         #     print(str(item.text))
         column_number = 1
         while True:
             try:
-                self.driver.find_element_by_xpath("//*[@id=\"tabTrending\"]/div[1]/div[2]/div[" + str(column_number) + "]")
+                self.driver.find_element_by_xpath("//*[@ng-if=\"popularSearches\"]/div[2]/div[" + str(column_number) + "]")
                 row_number = 1
                 while True:
                     try:
-                        row = self.driver.find_element_by_xpath("//*[@id=\"tabTrending\"]/div[1]/div[2]/div["+str(column_number)+"]/ul/li["+str(row_number)+"]/a")
+                        row = self.driver.find_element_by_xpath("//*[@ng-if=\"popularSearches\"]/div[2]/div["+str(column_number)+"]/ul/li["+str(row_number)+"]/a")
                         print(str(row.text)+" - "+str(row.get_attribute("href")))
                         row_number += 1
                     except:
