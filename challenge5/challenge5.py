@@ -28,9 +28,10 @@ class Challenge5(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.NAME, "serverSideDataTable_length")))
         dropdown = self.driver.find_element(By.NAME, "serverSideDataTable_length")
         dropdown.find_element(By.XPATH, "//option[. = '100']").click()
-        time.sleep(3)
+        # time.sleep(3)
 
         # Run through each entry and count based on Model
+        WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@id=\"serverSideDataTable\"]/tbody/tr[100]/td[6]/span")))
         rows = self.driver.find_elements_by_xpath("//*[@data-uname=\"lotsearchLotmodel\"]")
         model_dict = dict()
         for row in rows:
@@ -43,7 +44,7 @@ class Challenge5(unittest.TestCase):
         # Print the results from the dictionary
         print("MODEL:")
         for model in model_dict:
-            print(model, model_dict[model])
+            print(model+" - "+str(model_dict[model]))
 
         # Break between segments of the test
         print()
@@ -68,7 +69,7 @@ class Challenge5(unittest.TestCase):
         # Print the results from the dictionary
         print("DAMAGE:")
         for damage in damage_dict:
-            print(damage, damage_dict[damage])
+            print(damage+" - "+str(damage_dict[damage]))
 
 
     if __name__ == '__main__':
