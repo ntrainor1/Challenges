@@ -24,11 +24,19 @@ class Challenge6(unittest.TestCase):
         self.driver.find_element(By.ID, "input-search").send_keys("porsche")
         self.driver.find_element(By.ID, "input-search").send_keys(Keys.ENTER)
 
-        # Once the search page is loaded, select 100 from the dropdown menu
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.NAME, "serverSideDataTable_length")))
-        dropdown = self.driver.find_element(By.NAME, "serverSideDataTable_length")
-        dropdown.find_element(By.XPATH, "//option[. = '100']").click()
+        # Once the search page is loaded, search for "skyline" in the secondary searchbar
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@placeholder=\"Search by Lot#,VIN#\"]")))
+        # self.driver.find_element(By.XPATH, "//*[@placeholder=\"Search by Lot#,VIN#\"]").send_keys("skyline")
 
+        # Try to find an entry with "skyline", otherwise take a screenshot
+        try:
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@data-uname=\"lotsearchLotnumber\"]")))
+            elements = self.driver.find_elements_by_xpath("//*[@data-uname=\"lotsearchLotnumber\"]")
+            href = elements[1].get_attribute("href")
+            self.assertIn("copart", href)
+        except:
+            print("\"skyline\" not found")
+            self.driver.save_screenshot("screenshot.png")
 
     if __name__ == '__main__':
         unittest.main()
