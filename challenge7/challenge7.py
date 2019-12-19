@@ -32,9 +32,9 @@ class Challenge7(unittest.TestCase):
             self.driver.get(model_dict[model])
             WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@data-uname=\"lotsearchLotmodel\"]")))
             keyword = model[0:4]
-            print(keyword)
-            print(self.driver.find_element_by_xpath("//*[@data-uname=\"lotsearchLotmodel\"]").text)
-            print(self.driver.title)
+            # print(keyword)
+            # print(self.driver.find_element_by_xpath("//*[@data-uname=\"lotsearchLotmodel\"]").text)
+            # print(self.driver.title)
             try:
                 self.assertTrue(keyword.upper() in self.driver.find_element_by_xpath("//*[@data-uname=\"lotsearchLotmodel\"]").text)
             except:
